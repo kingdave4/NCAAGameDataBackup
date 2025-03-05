@@ -48,12 +48,19 @@ def process_one_video():
         # Parse the JSON string into a Python dictionary
         highlights = json.loads(json_content)
 
-        # Extract the first video URL from the JSON data
-        # Adjust the key path ('["data"][0]["url"]') based on the actual structure of your JSON
-        video_url = highlights["data"][0]["url"]
+       # Process each highlight record that has a video URL.
+        videos = highlights.get("data", [])
+        if not videos:
+            print("No video records found in the JSON file.")
+            return
 
-        # Inform the user about the video URL being processed
-        print(f"Processing video URL: {video_url}")
+        for index, record in enumerate(videos):
+            video_url = record.get("url")
+            if not video_url:
+                print(f"Record {index} does not contain a video URL. Skipping.")
+                continue
+
+            print(f"Processing video URL {index}: {video_url}")
 
         # Inform the user that the video download process has started
         print("Downloading video...")

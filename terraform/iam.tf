@@ -72,6 +72,23 @@ data "aws_iam_policy_document" "ecs_custom_doc" {
     effect    = "Allow"
     resources = ["*"]  # MediaConvert requires "*" for resource ARN
   }
+
+  # 4) DynamoDB Permissions - Added for backup operations
+  statement {
+    actions = [
+      "dynamodb:PutItem",
+      "dynamodb:GetItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:Query",
+      "dynamodb:Scan",
+      "dynamodb:DescribeTable"
+    ]
+    effect    = "Allow"
+    resources = [
+      "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/SportsHighlights"
+    ]
+  }
 }
 
 # Create the custom IAM policy
@@ -93,7 +110,7 @@ resource "aws_iam_role_policy" "ecs_task_secrets_policy" {
   policy = data.aws_iam_policy_document.ecs_task_policy.json
 }
 
-# *** New Block: Allow the ECS task execution role to pass the MediaConvert role ***
+# Allow the ECS task execution role to pass the MediaConvert role
 resource "aws_iam_role_policy" "ecs_task_pass_role_policy" {
   name   = "${var.project_name}-ecs-task-pass-role-policy"
   role   = aws_iam_role.ecs_task_execution_role.id

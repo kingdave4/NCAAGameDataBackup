@@ -1,5 +1,5 @@
 # config.py
-
+from datetime import datetime
 # Import the 'os' module to access environment variables
 import os
 
@@ -21,7 +21,7 @@ RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 
 # The date for which to fetch basketball highlights. 
 # If the 'DATE' environment variable is not set, it defaults to '2023-12-01'.
-DATE = os.getenv("DATE", "2023-12-01")
+DATE = os.getenv("DATE", datetime.utcnow().strftime("%Y-%m-%d"))
 
 # The name of the basketball league. 
 # If the 'LEAGUE_NAME' environment variable is not set, it defaults to 'NCAA'.
@@ -83,3 +83,8 @@ RETRY_DELAY = int(os.getenv("RETRY_DELAY", "30"))
 # The waiting time (in seconds) between the execution of different scripts within the pipeline.
 # It converts the 'WAIT_TIME_BETWEEN_SCRIPTS' environment variable to an integer, defaulting to 60 seconds if not set.
 WAIT_TIME_BETWEEN_SCRIPTS = int(os.getenv("WAIT_TIME_BETWEEN_SCRIPTS", "60"))
+
+###################################
+# DynamoDB
+###################################
+DYNAMODB_TABLE = os.getenv("DYNAMODB_TABLE", "SportsHighlights")

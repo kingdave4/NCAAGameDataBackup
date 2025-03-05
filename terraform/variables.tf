@@ -25,6 +25,11 @@ variable "ecr_repository_name" {
   type        = string
 }
 
+variable "DYNAMODB_TABLE" {
+  description = "Name of the DynamoDB table"
+  type        = string
+}
+
 variable "rapidapi_ssm_parameter_arn" {
   description = "ARN of the RapidAPI key stored in SSM Parameter Store"
   type        = string

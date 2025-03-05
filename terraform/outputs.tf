@@ -5,17 +5,17 @@ output "bucket_name" {
 
 output "ecr_repository_url" {
   description = "ECR repository URL"
-  value       = aws_ecr_repository.this.repository_url
+  value       = aws_ecr_repository.my_ecr.repository_url
 }
 
 output "ecs_cluster_name" {
   description = "ECS Cluster Name"
-  value       = aws_ecs_cluster.this.name
+  value       = aws_ecs_cluster.my_cluster.name
 }
 
-output "ecs_service_name" {
-  description = "ECS Service Name"
-  value       = aws_ecs_service.this.name
+output "EventBridge_rule_name" {
+  description = "EventBridge rule name"
+  value       = aws_cloudwatch_event_rule.daily_schedule.name
 }
 
 output "mediaconvert_role_arn" {
