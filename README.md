@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # NCAA Game Highlights – Project #5
 
 Welcome to my **Project #5: NCAA Game Highlights**! This containerized pipeline fetches NCAA game highlights using RapidAPI, processes the media with AWS MediaConvert, and leverages Terraform to provision the required AWS infrastructure. This project is designed to give you hands-on experience with Docker, AWS services, and Infrastructure as Code (IaC) using Terraform—all in one streamlined solution.
