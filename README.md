@@ -1,16 +1,16 @@
 # NCAA Game Highlights – Project #5
 
-Welcome to my **Project #5: NCAA Game Highlights**! This containerized pipeline fetches NCAA game highlights using RapidAPI, processes the media with AWS MediaConvert, and leverages Terraform to provision the required AWS infrastructure. This project is designed to give you hands-on experience with Docker, AWS services, and Infrastructure as Code (IaC) using Terraform—all in one streamlined solution.
+Welcome to my **Project #6: SportsDataBackup**! This Project is a build up on last Project #5 but this time we are making it even more reliable and efficient by creating a Dynamodb which is being used as a backup for our queries and event bridge which is being used to trigger our service to run every day which is creating automation for whole process, giving us the most updated NCCAGamehight and now we can just deploy our ccode from terraform and push the docker image to ECR and then we can sit and rest while everything is being executed for us while the requested first video is being processed by Media convert and giving us the best quality.
 
 ---
 
 ## Project Overview
 
 This project demonstrates how to:
-- **Fetch Highlights:** Query the Sports Highlights API (via RapidAPI) for NCAA game highlights.
-- **Process Videos:** Retrieve video URLs from the API, download them, and store them in an S3 bucket.
-- **Media Conversion:** Use AWS MediaConvert to transcode videos (adjusting codec, resolution, and bitrate).
-- **Containerization & IaC:** Run the entire pipeline inside a Docker container while provisioning resources using Terraform.
+- **Fetch Game Data**: Query the Sports Data API (via RapidAPI) for NCAA game data.
+- **Data Storage**: Store retrieved game data in an AWS DynamoDB table for scalable and reliable storage.
+- **Event-Driven Processing**: Utilize AWS EventBridge to handle data changes and trigger subsequent processing tasks.
+- **Containerization & IaC**: Run the entire pipeline inside a Docker container while provisioning resources using Terraform.
 
 ---
 
@@ -19,14 +19,16 @@ This project demonstrates how to:
 - **RapidAPI Integration:** Access NCAA game highlights using a free-tier RapidAPI endpoint.
 - **AWS-Powered Workflow:** Seamlessly integrates AWS S3 for storage and AWS MediaConvert for video processing.
 - **Dockerized Pipeline:** Containerize your entire workflow for consistent deployments.
-- **Terraform Automation:** Provision all AWS resources (VPC, S3, IAM, ECR, ECS, etc.) with repeatable Terraform scripts.
+- **Terraform Automation:** Provision all AWS resources using Infrastructure as Code.
 - **Secure Configuration:** Manage sensitive keys and configuration via environment variables and AWS Secrets Manager.
-
+- **EventBridge**: Implement event-driven processing for data changes and integrations.
+- **Dockerized Pipeline**: Containerize the workflow for consistent deployments.
 ---
 
 ### Technical Diagram
 
-![Snap](https://github.com/user-attachments/assets/f3c4f55e-cea1-4147-96cc-2473e9e09636)
+![image](https://github.com/user-attachments/assets/dbfeab04-9bf7-4fd1-a885-d9f05d9ae4db)
+
 
 ### File Structure
 
@@ -45,6 +47,8 @@ terraform/
 ├── main.tf                   # Main Terraform configuration file
 ├── variables.tf              # Variables
 ├── secrets.tf                # AWS Secrets Manager and sensitive data provisioning
+├── dynamodb.tf
+├── eventbridge.tf            # 
 ├── iam.tf                    # IAM roles and policies
 ├── ecr.tf                    # ECR repository configuration
 ├── ecs.tf                    # ECS cluster and service configuration
@@ -88,6 +92,7 @@ OUTPUT_KEY=videos/first_video.mp4
 RETRY_COUNT=3
 RETRY_DELAY=30
 WAIT_TIME_BETWEEN_SCRIPTS=60
+DYNAMODB_TABLE=
 ```
 
 ### 2. Create the terraform.tfvars File for Deploying Terraform Code
@@ -110,7 +115,7 @@ mediaconvert_role_arn     = ""
 # mediaconvert_role_arn = "arn:aws:iam::123456789012:role/YourCustomMediaConvertRole"
 # Leaving this string empty will use the role that is automatically created by the Terraform scripts.
 
-retry_count               = 5
+retry_count               = 3
 retry_delay               = 60
 ```
 Make sure to replace placeholder values with your actual configuration details.
@@ -120,8 +125,8 @@ Make sure to replace placeholder values with your actual configuration details.
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/kingdave4/NCAA_GamehighLight.git
-cd NCAA_GamehighLight/src
+git clone https://github.com/kingdave4/NCAAGameDataBackup.git
+cd NCAAGameDataBackup
 ```
 
 ### 2. Add Your API Key to AWS Secrets Manager
@@ -147,7 +152,7 @@ docker build -t highlight-processor .
 ```
 Run the container:
 ``` bash
-docker run -d --env-file .env highlight-processor
+docker run --env-file .env highlight-processor
 ```
 
 The container executes the pipeline: fetching highlights, processing a video, and submitting a MediaConvert job. Verify the output files in your S3 bucket:
@@ -201,28 +206,6 @@ docker push <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/highlight-pipeline:l
 ``` bash
 terraform destroy -auto-approve
 ```
-
-## Challenges I Overcame
-
-This Challlenge was annoying but it felt very satifying after completing it and finding the issue.
-
-1️⃣ ECS Task Restart Loop: The ECS service was repeatedly starting and stopping tasks, leading to a continuous loop. This issue was traced back to application or configuration errors causing the tasks to stop unexpectedly.
-
-2️⃣ IAM PassRole Permission for MediaConvert: The ECS tasks were unable to create processed highlight videos due to insufficient permissions, specifically lacking the iam:PassRole permission required for AWS Elemental MediaConvert. I addressed this by setting up the necessary IAM roles and policies, granting the ECS tasks the appropriate permissions to interact with MediaConvert. 
-
-
-### Troubleshooting
-
-ECS Task Failures:
-
-- Check the stopped reason and exit code for tasks in the ECS console to identify underlying issues.
-- Did some research and with the help of chatgpt i found the reason to why it kept failing.
-
-MediaConvert Permission Errors:
-- Verify that the IAM roles associated with ECS tasks include the necessary permissions, such as iam:PassRole, to allow interaction with MediaConvert.
-- Review the IAM policies to ensure they grant access to the required AWS resources and services.
-
-By systematically addressing these challenges and refining the IAM configurations, the project now operates smoothly, with ECS tasks running as expected and MediaConvert processing videos without permission issues.
 
 ### Key takeaways from Project #5:
 - Leveraging containerization (Docker) to ensure consistency.
