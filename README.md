@@ -236,5 +236,3 @@ By systematically addressing these challenges and refining the IAM configuration
 - Transition from static date queries to dynamic time ranges (e.g., last 30 days).
 - Improve logging and error handling for enhanced observability.
 =======
-# NCAAGameDataBackup
->>>>>>> 357a2ba1d0a80361d358ad39ed304166aec9e24e
