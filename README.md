@@ -1,61 +1,70 @@
-# NCAA Game Highlights – Project #5
+# NCAA Game Data Backup
 
-Welcome to my **Project #6: SportsDataBackup**! This Project is a build up on last Project #5 but this time we are making it even more reliable and efficient by creating a Dynamodb which is being used as a backup for our queries and event bridge which is being used to trigger our service to run every day which is creating automation for whole process, giving us the most updated NCCAGamehight and now we can just deploy our ccode from terraform and push the docker image to ECR and then we can sit and rest while everything is being executed for us while the requested first video is being processed by Media convert and giving us the best quality.
+**Project #6: SportsDataBackup**
+
+Welcome to **SportsDataBackup**—an evolution of our previous NCAA Game Highlights project. This upgrade enhances reliability and efficiency by integrating AWS DynamoDB for query backups and AWS EventBridge for daily automated triggers. With Terraform provisioning our AWS infrastructure and Docker handling containerization, your NCAA game highlights are fetched, processed, and delivered seamlessly while MediaConvert ensures top-notch video quality.
 
 ---
 
 ## Project Overview
 
 This project demonstrates how to:
-- **Fetch Game Data**: Query the Sports Data API (via RapidAPI) for NCAA game data.
-- **Data Storage**: Store retrieved game data in an AWS DynamoDB table for scalable and reliable storage.
-- **Event-Driven Processing**: Utilize AWS EventBridge to handle data changes and trigger subsequent processing tasks.
-- **Containerization & IaC**: Run the entire pipeline inside a Docker container while provisioning resources using Terraform.
+
+- **Fetch Game Data**: Query the Sports Highlights API (via RapidAPI) to retrieve the latest NCAA game highlights.
+- **Backup & Store Data**: Use AWS DynamoDB to securely back up query data and AWS S3 to store video metadata.
+- **Event-Driven Automation**: Leverage AWS EventBridge to schedule daily triggers, automating the entire workflow.
+- **Video Processing**: Process the initial video via AWS MediaConvert to ensure optimal quality.
+- **Containerization & IaC**: Run the complete pipeline within a Docker container while provisioning AWS resources using Terraform.
 
 ---
 
-### Key Features
+## Key Features
 
-- **RapidAPI Integration:** Access NCAA game highlights using a free-tier RapidAPI endpoint.
-- **AWS-Powered Workflow:** Seamlessly integrates AWS S3 for storage and AWS MediaConvert for video processing.
-- **Dockerized Pipeline:** Containerize your entire workflow for consistent deployments.
-- **Terraform Automation:** Provision all AWS resources using Infrastructure as Code.
-- **Secure Configuration:** Manage sensitive keys and configuration via environment variables and AWS Secrets Manager.
-- **EventBridge**: Implement event-driven processing for data changes and integrations.
-- **Dockerized Pipeline**: Containerize the workflow for consistent deployments.
+- **RapidAPI Integration**: Access NCAA game highlights via a free-tier API endpoint.
+- **AWS-Powered Workflow**:
+  - **DynamoDB**: Backup and store query data for high reliability.
+  - **S3 & MediaConvert**: Manage metadata storage and process videos for quality output.
+  - **EventBridge**: Automate daily triggers to keep your data up-to-date.
+- **Dockerized Pipeline**: Ensure consistent deployment environments.
+- **Terraform Automation**: Provision and manage AWS resources with Infrastructure as Code.
+- **Secure Configuration**: Use environment variables and AWS Secrets Manager to protect sensitive credentials.
+
 ---
 
-### Technical Diagram
+## Technical Diagram
 
-![image](https://github.com/user-attachments/assets/dbfeab04-9bf7-4fd1-a885-d9f05d9ae4db)
+![image](https://github.com/user-attachments/assets/0cc7fe62-213b-4d80-8f52-792721267c98)
 
+---
 
-### File Structure
+## File Structure
 
-```bash
-src/
-├── Dockerfile                # Instructions to build the Docker image
-├── config.py                 # Loads environment variables with sensible defaults
-├── fetch.py                  # Fetches NCAA highlights from RapidAPI and stores metadata in S3
-├── mediaconvert_process.py   # Submits a job to AWS MediaConvert to process a video
-├── process_one_video.py      # Downloads the first video from S3 JSON metadata and re-uploads it
-├── run_all.py                # Orchestrates the execution of all scripts
-├── requirements.txt          # Python dependencies for the project
-├── .env                      # Environment variables (API keys, AWS credentials, etc.)
-└── .gitignore                # Files to exclude from Git
-terraform/
-├── main.tf                   # Main Terraform configuration file
-├── variables.tf              # Variables
-├── secrets.tf                # AWS Secrets Manager and sensitive data provisioning
-├── dynamodb.tf
-├── eventbridge.tf            # 
-├── iam.tf                    # IAM roles and policies
-├── ecr.tf                    # ECR repository configuration
-├── ecs.tf                    # ECS cluster and service configuration
-├── s3.tf                   # S3 bucket provisioning for video storage
-├── container_definitions.tpl # Template for container definitions
-├── terraform.tfvars          # Variables used in the Terraform configuration
-└── outputs.tf                # Outputs from Terraform
+```plaintext
+NCAAGameDataBackup/
+├── src/
+│   ├── Dockerfile                # Instructions to build the Docker image
+│   ├── config.py                 # Loads environment variables with sensible defaults
+│   ├── fetch.py                  # Fetches NCAA highlights from RapidAPI and stores metadata in S3
+│   ├── mediaconvert_process.py   # Submits a job to AWS MediaConvert for video processing
+│   ├── process_one_video.py      # Processes the first video from S3 metadata and re-uploads it
+│   ├── run_all.py                # Orchestrates the execution of all scripts
+│   ├── requirements.txt          # Python dependencies for the project
+│   ├── .env                      # Environment variables (API keys, AWS credentials, etc.)
+│   └── .gitignore                # Files to exclude from Git
+├── terraform/
+│   ├── main.tf                   # Main Terraform configuration file
+│   ├── variables.tf              # Variable definitions
+│   ├── secrets.tf                # AWS Secrets Manager and sensitive data provisioning
+│   ├── dynamodb.tf               # DynamoDB table configuration
+│   ├── eventbridge.tf            # EventBridge rules and configuration
+│   ├── iam.tf                    # IAM roles and policies
+│   ├── ecr.tf                    # ECR repository configuration
+│   ├── ecs.tf                    # ECS cluster and service configuration
+│   ├── s3.tf                     # S3 bucket provisioning for video storage
+│   ├── container_definitions.tpl # Template for container definitions
+│   ├── terraform.tfvars          # Variables for the Terraform configuration
+│   └── outputs.tf                # Terraform outputs
+└── README.md                     # Project documentation
 ```
 
 ## Prerequisites
