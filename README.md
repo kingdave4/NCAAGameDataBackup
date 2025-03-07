@@ -101,7 +101,7 @@ OUTPUT_KEY=videos/first_video.mp4
 RETRY_COUNT=3
 RETRY_DELAY=30
 WAIT_TIME_BETWEEN_SCRIPTS=60
-DYNAMODB_TABLE=
+DYNAMODB_TABLE=your_dynamodb_table_name_here
 ```
 
 ### 2. Create the terraform.tfvars File for Deploying Terraform Code
