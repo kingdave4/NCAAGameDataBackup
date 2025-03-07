@@ -224,7 +224,7 @@ terraform destroy -auto-approve
 
 
 
-### Key takeaways from Project #5:
+### Key takeaways from Project:
 - Containerization: Docker ensures consistent deployment environments.
 - AWS Integration: The pipeline fetches sports highlights, stores data in S3 and DynamoDB, and processes videos using MediaConvert.
 - Scheduled Execution: ECS Fargate runs containerized tasks on a schedule triggered by EventBridge.
