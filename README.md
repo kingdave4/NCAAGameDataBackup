@@ -107,7 +107,7 @@ DYNAMODB_TABLE=your_dynamodb_table_name_here
 
 ### 2. Create the terraform.tfvars File for Deploying Terraform Code
 
-Within the terraform directory, create a file named terraform.tfvars and paste the following content. You can update the values as needed. This file will be used to deploy your Terraform code and provision the AWS resources for the project. You have the option to enter your own project name by updating the project_name variable. Additionally, if you wish to use a custom MediaConvert role, provide its ARN in the mediaconvert_role_arn variable. For example, you might expect a value like: arn:aws:iam::123456789012:role/YourCustomMediaConvertRole. If left blank, the default role that is created during provisioning will be used.
+Inside the terraform/ directory, create a file named terraform.tfvars with the following content (update placeholders as needed):
 
 ``` tf
 # terraform.tfvars
