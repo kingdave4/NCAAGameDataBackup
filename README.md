@@ -2,7 +2,7 @@
 
 **Project #6: SportsDataBackup**
 
-Welcome to **SportsDataBackup**—an evolution of our previous NCAA Game Highlights project. This upgrade enhances reliability and efficiency by integrating AWS DynamoDB for query backups and AWS EventBridge for daily automated triggers using ECS Fargate. With Terraform provisioning our AWS infrastructure and Docker handling containerization, your NCAA game highlights are fetched, processed, and delivered seamlessly while MediaConvert ensures top-notch video quality.
+Welcome to **SportsDataBackup**—an evolution of our previous NCAA Game Highlights project. This upgrade enhances reliability and efficiency by integrating AWS DynamoDB for query backups and AWS EventBridge for daily automated triggers with ECS Fargate. With Terraform provisioning our AWS infrastructure and Docker handling containerization, your NCAA game highlights are fetched, processed, and delivered seamlessly while MediaConvert ensures top-notch video quality.
 
 ---
 
