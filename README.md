@@ -24,6 +24,7 @@ This project demonstrates how to:
 - **AWS-Powered Workflow**:
   - **DynamoDB**: Backup and store query data for high reliability.
   - **S3 & MediaConvert**: Manage metadata storage and process videos for quality output.
+  - **ECS Fargate**: Run containerized tasks without managing servers.
   - **EventBridge**: Automate daily triggers to keep your data up-to-date.
 - **Dockerized Pipeline**: Ensure consistent deployment environments.
 - **Terraform Automation**: Provision and manage AWS resources with Infrastructure as Code.
