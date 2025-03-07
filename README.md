@@ -218,10 +218,11 @@ terraform destroy -auto-approve
 ```
 
 ### Key takeaways from Project #5:
-- Leveraging containerization (Docker) to ensure consistency.
-- Integrating multiple AWS services (S3, MediaConvert, ECS) for a robust media pipeline.
-- Automating infrastructure setup using Terraform.
-- Emphasizing secure configuration management via environment variables and Secrets Manager.
+- Containerization: Docker ensures consistent deployment environments.
+- AWS Integration: The pipeline fetches sports highlights, stores data in S3 and DynamoDB, and processes videos using MediaConvert.
+- Scheduled Execution: ECS Fargate runs containerized tasks on a schedule triggered by EventBridge.
+- Infrastructure as Code: Terraform automates AWS resource provisioning and management.
+- Secure Configuration: Environment variables and AWS Secrets Manager protect sensitive data.
 
 ### Future Enhancements
 - Expand Terraform scripts to provision additional AWS resources.
