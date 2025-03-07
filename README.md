@@ -217,6 +217,13 @@ docker push <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/highlight-pipeline:l
 terraform destroy -auto-approve
 ```
 
+
+### Output from Dynamodb backup
+
+![image](https://github.com/user-attachments/assets/350a41fc-c7f6-4b7f-bc75-54b1c4db3713)
+
+
+
 ### Key takeaways from Project #5:
 - Containerization: Docker ensures consistent deployment environments.
 - AWS Integration: The pipeline fetches sports highlights, stores data in S3 and DynamoDB, and processes videos using MediaConvert.
